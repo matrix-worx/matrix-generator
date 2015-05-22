@@ -11,11 +11,17 @@ set(project_sources
 set(Boost_USE_STATIC_LIBS        ON) # only find static libs
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
-
+if(WIN32)
+find_package(Boost
+    REQUIRED
+    COMPONENTS system program_options date_time chrono
+)
+else()
 find_package(Boost
     REQUIRED
     COMPONENTS system program_options
 )
+endif()
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING
