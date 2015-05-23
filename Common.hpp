@@ -1,3 +1,14 @@
+/*************************************************************************
+ * mgen
+ *************************************************************************
+ * @file    Common.hpp
+ * @date    28.01.15
+ * @author  Hlieb Romanov <rgewebppc@gmail.com>
+ * @brief   Common declarations
+ ************************************************************************/
+/** @addtogroup mgen Matrices generator and converter tool
+ *  @{
+ */
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
@@ -16,6 +27,13 @@ namespace Parameters
     };
 }
 
+/**
+ * @brief Test specific bits in mask
+ * @param mask - bit mask
+ * @param flag - bits to test
+ * @return True - if all bits in flag are set in mask
+ */
 bool testFlag(int mask, int flag);
 
 #endif // COMMON_HPP
+/** @}*/

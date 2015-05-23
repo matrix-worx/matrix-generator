@@ -1,3 +1,14 @@
+/*************************************************************************
+ * mgen
+ *************************************************************************
+ * @file    main.cpp
+ * @date    28.01.15
+ * @author  Hlieb Romanov <rgewebppc@gmail.com>
+ * @brief   Command line tool for matrices generation
+ ************************************************************************/
+/** @addtogroup mgen Matrices generator and converter tool
+ *  @{
+ */
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
@@ -9,12 +20,16 @@
 
 namespace po = boost::program_options;
 
+// Define required options masks
 uint32_t generateRandomMatrix = Parameters::MATRIX_ROWS | Parameters::MATRIX_COLUMNS | Parameters::FILL_RANDOM | Parameters::OUTPUT_FILE;
 uint32_t generateMatrixFromFile = Parameters::INPUT_FILE | Parameters::OUTPUT_FILE;
 
 po::options_description optDescr( "Allowed options" );
 po::variables_map options;
 
+/**
+ * @brief Prepare program options object
+ */
 void prepareOptionsDescription( void )
 {
     optDescr.add_options()
@@ -28,7 +43,20 @@ void prepareOptionsDescription( void )
         ( "bin", "consume input in binary format ( by default assume text format)" );
 }
 
-bool parseCommandLineArguments( uint32_t& inputParametersMask, std::string& inputFile, std::string& outputFile, uint32_t& rows, uint32_t& cols )
+/**
+ * @brief Parse command line arguments and fill passed arguments
+ * @param[out] inputParametersMask - binary mask that indicates which options were set
+ * @param[out] inputFile - path to the input file with matrix data
+ * @param[out] outputFile - path to the file where to place generated matrix
+ * @param[out] rows - rows count in new matrix
+ * @param[out] cols - column count in new matrix
+ * @return True - if all required options were set, false - otherwise
+ */
+bool parseCommandLineArguments( uint32_t& inputParametersMask,
+                                std::string& inputFile,
+                                std::string& outputFile,
+                                uint32_t& rows,
+                                uint32_t& cols )
 {
 
     if ( options.count( "random" ) )
@@ -73,17 +101,32 @@ bool parseCommandLineArguments( uint32_t& inputParametersMask, std::string& inpu
 
     return result;
 }
-
+/**
+ * @brief Test specific bits in mask
+ * @param mask - bit mask
+ * @param flag - bits to test
+ * @return True - if all bits in flag are set in mask
+ */
 bool testFlag( int mask, int flag )
 {
     return ( ( mask & flag ) == flag );
 }
 
+/**
+ * @brief Print help text with options description
+ */
 void printHelp( void )
 {
     std::cout << optDescr << std::endl;
 }
 
+/**
+ * @brief Create matrix with specified dimension and fill it with random numbers
+ * @param rows - rows count in new matrix
+ * @param cols - columns count in new matrix
+ * @param[out] m - empty(invalid) matrix object to fill
+ * @return True - if operation was performed successfully, false -otherwise
+ */
 bool createRandomMatrix( uint32_t rows, uint32_t cols, matrix::CMatrix& m )
 {
     srand( time( NULL ) );
@@ -107,7 +150,12 @@ bool createRandomMatrix( uint32_t rows, uint32_t cols, matrix::CMatrix& m )
 
     return true;
 }
-
+/**
+ * @brief The main function
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main( int argc, char* argv[] )
 {
     prepareOptionsDescription();
@@ -182,4 +230,4 @@ int main( int argc, char* argv[] )
     }
     return 0;
 }
-
+/** @}*/
