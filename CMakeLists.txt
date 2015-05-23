@@ -23,6 +23,8 @@ find_package(Boost
 )
 endif()
 
+find_package (Threads REQUIRED)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug CACHE STRING
   "Choose the type of build: Debug/Release" FORCE)
@@ -46,4 +48,5 @@ add_executable(mgen
 target_link_libraries(mgen
     matrix
     ${Boost_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
 )
